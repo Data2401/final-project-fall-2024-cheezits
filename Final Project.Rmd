@@ -1,8 +1,9 @@
 ---
 title: "Slides!"
-author: "Dr. Shoemaker"
+author: "Diana & Leslie"
 output:
   slidy_presentation: 
     highlight: kate
   powerpoint_presentation: default
 ---
+
