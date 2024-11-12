@@ -1,5 +1,5 @@
 ---
-title: "Slides!"
+title: "Cheese Slides!"
 author: "Diana & Leslie"
 output:
   slidy_presentation: 
