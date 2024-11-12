@@ -7,4 +7,17 @@ output:
   powerpoint_presentation: default
 ---
 
+# Introduction
+
+This is our data***
+
+
+```{r}
+library(tidyverse)
+cheese <- read_csv("cheese.csv")
+
+glimpse(cheese)
+
+```
+
 
