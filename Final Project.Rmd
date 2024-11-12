@@ -31,6 +31,15 @@ glimpse(cheese)
 
 ```
 
+People may have a differnet opionion on how to determine the healthiest of the cheeses. In addition, We put our own idea of what is the healthiest cheese by using the variables low saturated fat levels and carbohydrates.
+This helped us determine that -------- are the best cheeses to eat if you want to be more ont he healthier side of things.
+
+
+
+
+
+#How does the saturated fat content compare across different cheese types? Are there cheeses with notably higher or lower saturated fat levels?
+```{r}
 
 
 
@@ -41,3 +50,92 @@ glimpse(cheese)
 
 
 
+```
+
+
+
+
+
+
+
+
+
+#How does cholesterol content vary by cheese type? Which cheeses are lower in cholesterol and might be better suited for people with specific dietary needs?
+```{r}
+
+
+
+
+
+
+
+
+```
+
+#Does fiber content vary significantly across cheeses, or is it generally low across all types?
+
+```{r}
+
+
+
+
+
+
+
+```
+
+
+#Are cheeses with higher saturated fat content also higher in total calories?
+
+```{r}
+
+
+
+
+
+
+
+```
+
+#How does the balance between protein, fat, and carbohydrate content differ between types of cheese? For example, are high-protein cheeses generally lower in carbs?
+
+```{r}
+
+
+
+
+
+
+
+```
+
+#Which cheeses have a profile that might be considered more "heart-healthy" (e.g., lower in saturated fat, higher in polyunsaturated fat)?
+
+```{r}
+
+
+
+
+
+
+
+
+
+
+
+
+```
+
+#Can we identify cheese types that are lower in calories, fat, and cholesterol while still providing adequate protein?
+
+
+```{r}
+
+
+
+
+
+
+
+
+```
