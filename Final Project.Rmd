@@ -1,1 +1,8 @@
-##Cheese
+---
+title: "Slides!"
+author: "Dr. Shoemaker"
+output:
+  slidy_presentation: 
+    highlight: kate
+  powerpoint_presentation: default
+---
