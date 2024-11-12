@@ -9,7 +9,7 @@ output:
 
 # Introduction
 
-This is our data***
+Good Afternoon, my partner and I are going to be discussing the benefits and health risks with Cheese. Some of the the key points we will be talking about how cholesterol , fat , and calories can have an impact on your health.
 
 
 ```{r}
@@ -19,5 +19,25 @@ cheese <- read_csv("cheese.csv")
 glimpse(cheese)
 
 ```
+# What is the healthiest cheese?
+```{r}
+
+
+
+
+
+
+
+
+```
+
+
+
+
+
+
+
+
+
 
 
