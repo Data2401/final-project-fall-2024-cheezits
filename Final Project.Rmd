@@ -15,14 +15,16 @@ Good Afternoon, my partner and I are going to be discussing the benefits and hea
 ```{r}
 library(tidyverse)
 cheese <- read_csv("cheese.csv")
-
+library(plotly)
 glimpse(cheese)
 
 ```
 # What is the healthiest cheese?
 ```{r}
 
+hc <- cheese %>% ggplot(aes(x = carb, y = sat_fat, col =  type)) + geom_point()
 
+ggplotly(hc)
 
 
 
