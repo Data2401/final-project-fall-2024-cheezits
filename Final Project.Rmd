@@ -20,48 +20,30 @@ glimpse(cheese)
 
 ```
 # What is the healthiest cheese?
-```{r}
+
+
+People may have a differnet opionion on how to determine the healthiest of the cheeses. In addition, We put our own idea of what is the healthiest cheese by using the variables low saturated fat levels and carbohydrates.
+This helped us determine that -------- are the best cheeses to eat if you 
+want to be more ont he healthier side of things.
+
+```{r, echo=FALSE}
 
 hc <- cheese %>% ggplot(aes(x = carb, y = sat_fat, col =  type)) + geom_point()
 
 ggplotly(hc)
 
-
-
-
-
-
 ```
-
-People may have a differnet opionion on how to determine the healthiest of the cheeses. In addition, We put our own idea of what is the healthiest cheese by using the variables low saturated fat levels and carbohydrates.
-This helped us determine that -------- are the best cheeses to eat if you want to be more ont he healthier side of things.
-
-
-
-
-
+***
 #How does the saturated fat content compare across different cheese types? Are there cheeses with notably higher or lower saturated fat levels?
+
+This graph demonstrates which cheeses have low saturated fat. As we made this table, we noticed that the top 3 cheeses that have the lowest saturated fat are Moterella, Cottage, and Ricotta. This is determined due to these cheeses having less than 1 gram of saturated fat within them
+
 ```{r}
 
-
-
-
-
-
-
-
-
+cheese %>% select(type, sat_fat) %>% filter(sat_fat < 1) %>% arrange(sat_fat)
 
 ```
-
-
-
-
-
-
-
-
-
+***
 #How does cholesterol content vary by cheese type? Which cheeses are lower in cholesterol and might be better suited for people with specific dietary needs?
 ```{r}
 
@@ -74,6 +56,10 @@ This helped us determine that -------- are the best cheeses to eat if you want t
 
 ```
 
+
+
+
+***
 #Does fiber content vary significantly across cheeses, or is it generally low across all types?
 
 ```{r}
@@ -86,7 +72,7 @@ This helped us determine that -------- are the best cheeses to eat if you want t
 
 ```
 
-
+***
 #Are cheeses with higher saturated fat content also higher in total calories?
 
 ```{r}
@@ -99,6 +85,9 @@ This helped us determine that -------- are the best cheeses to eat if you want t
 
 ```
 
+
+
+***
 #How does the balance between protein, fat, and carbohydrate content differ between types of cheese? For example, are high-protein cheeses generally lower in carbs?
 
 ```{r}
@@ -111,13 +100,19 @@ This helped us determine that -------- are the best cheeses to eat if you want t
 
 ```
 
+
+
+
+***
 #Which cheeses have a profile that might be considered more "heart-healthy" (e.g., lower in saturated fat, higher in polyunsaturated fat)?
 
 ```{r}
 
 
 
+l_a_p <- cheese %>% filter(sat_fat < 1 & polysat_fat <= 1.4) %>% ggplot(aes(x = sat_fat, y = polysat_fat, col =  type)) + geom_point()
 
+ggplotly(l_a_p)
 
 
 
@@ -127,7 +122,7 @@ This helped us determine that -------- are the best cheeses to eat if you want t
 
 
 ```
-
+***
 #Can we identify cheese types that are lower in calories, fat, and cholesterol while still providing adequate protein?
 
 
