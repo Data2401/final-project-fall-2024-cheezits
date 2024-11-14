@@ -12,7 +12,7 @@ output:
 Good Afternoon, my partner and I are going to be discussing the benefits and health risks with Cheese. Some of the the key points we will be talking about how cholesterol , fat , and calories can have an impact on your health.
 
 
-```{r echo=FALSE}
+```{r echo = FALSE}
 library(tidyverse)
 cheese <- read_csv("cheese.csv")
 library(plotly)
@@ -66,11 +66,13 @@ ggplotly(fiber_in_cheese)
 
 For cheese to be a healthy consumption, the calories must be less than 100 when only eating 1 ounce. A high saturated cheese is when an ounce of chees is eater, it gives you more than 3 grams of saturated fat.
 
-```{r echo = False}
+```{r echo = FALSE}
 
 high_risk <- cheese %>% filter(sat_fat > 1 & kcal <= 100) %>% ggplot(aes(x = sat_fat, y = kcal, col =  type)) + geom_point()
 
 ggplotly(high_risk)
+
+
 ```
 ***
 #How does the balance between protein, fat, and carbohydrate content differ between types of cheese? For example, are high-protein cheeses generally lower in carbs?
@@ -88,7 +90,7 @@ ggplotly(high_risk)
 ***
 #Which cheeses have a profile that might be considered more "heart-healthy" (e.g., lower in saturated fat, higher in polyunsaturated fat)?
 
-```{r echo = False}
+```{r echo = FALSE}
 
 heart_health <- cheese %>% filter(sat_fat < 1 & polysat_fat <= 1.4) %>% ggplot(aes(x = sat_fat, y = polysat_fat, col =  type)) + geom_point()
 
