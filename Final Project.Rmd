@@ -108,18 +108,9 @@ cheese %>% select(type, sat_fat) %>% filter(sat_fat < 1) %>% arrange(sat_fat)
 
 ```{r}
 
+heart_health <- cheese %>% filter(sat_fat < 1 & polysat_fat <= 1.4) %>% ggplot(aes(x = sat_fat, y = polysat_fat, col =  type)) + geom_point()
 
-
-l_a_p <- cheese %>% filter(sat_fat < 1 & polysat_fat <= 1.4) %>% ggplot(aes(x = sat_fat, y = polysat_fat, col =  type)) + geom_point()
-
-ggplotly(l_a_p)
-
-
-
-
-
-
-
+ggplotly(heart_health)
 
 ```
 ***
