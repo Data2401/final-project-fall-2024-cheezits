@@ -56,7 +56,7 @@ cheese %>% select(type, sat_fat) %>% filter(sat_fat < 1) %>% arrange(sat_fat)
 
 If you didn't know, Fiber is the best thing to possibly do for your body when eating. It help with digestion and basically helps regulate blood sugar in your body due to you being able to feel more fuller when eating things that contain fiber. From this grapgh, we are able to determine that mozzerella is the best when it comes to fiber as well as low saturated fat. 
 
-```{r echo = FALSE}
+```{r echo = FALSE }
 fiber_in_cheese <- cheese %>% ggplot(aes(x = fiber, col =  type)) + geom_bar()
 ggplotly(fiber_in_cheese)
 ```
@@ -64,11 +64,13 @@ ggplotly(fiber_in_cheese)
 ***
 #Are cheeses with higher saturated fat content also higher in total calories?
 
-```{r}
+For cheese to be a healthy consumption, the calories must be less than 100 when only eating 1 ounce. A high saturated cheese is when an ounce of chees is eater, it gives you more than 3 grams of saturated fat.
 
+```{r echo = False}
 
+high_risk <- cheese %>% filter(sat_fat > 1 & kcal <= 100) %>% ggplot(aes(x = sat_fat, y = kcal, col =  type)) + geom_point()
 
-
+ggplotly(high_risk)
 ```
 ***
 #How does the balance between protein, fat, and carbohydrate content differ between types of cheese? For example, are high-protein cheeses generally lower in carbs?
@@ -86,7 +88,7 @@ ggplotly(fiber_in_cheese)
 ***
 #Which cheeses have a profile that might be considered more "heart-healthy" (e.g., lower in saturated fat, higher in polyunsaturated fat)?
 
-```{r}
+```{r echo = False}
 
 heart_health <- cheese %>% filter(sat_fat < 1 & polysat_fat <= 1.4) %>% ggplot(aes(x = sat_fat, y = polysat_fat, col =  type)) + geom_point()
 
