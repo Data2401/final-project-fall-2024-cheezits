@@ -12,12 +12,11 @@ output:
 Good Afternoon, my partner and I are going to be discussing the benefits and health risks with Cheese. Some of the the key points we will be talking about how cholesterol , fat , and calories can have an impact on your health.
 
 
-```{r}
+```{r echo=FALSE}
 library(tidyverse)
 cheese <- read_csv("cheese.csv")
 library(plotly)
 glimpse(cheese)
-
 ```
 # What is the healthiest cheese?
 
@@ -27,11 +26,8 @@ This helped us determine that -------- are the best cheeses to eat if you
 want to be more ont he healthier side of things.
 
 ```{r, echo=FALSE}
-
 hc <- cheese %>% ggplot(aes(x = carb, y = sat_fat, col =  type)) + geom_point()
-
 ggplotly(hc)
-
 ```
 ***
 #How does the saturated fat content compare across different cheese types? Are there cheeses with notably higher or lower saturated fat levels?
@@ -53,23 +49,16 @@ cheese %>% select(type, sat_fat) %>% filter(sat_fat < 1) %>% arrange(sat_fat)
 
 
 
-
 ```
-
-
-
 
 ***
 #Does fiber content vary significantly across cheeses, or is it generally low across all types?
 
-```{r}
+If you didn't know, Fiber is the best thing to possibly do for your body when eating. It help with digestion and basically helps regulate blood sugar in your body due to you being able to feel more fuller when eating things that contain fiber. From this grapgh, we are able to determine that mozzerella is the best when it comes to fiber as well as low saturated fat. 
 
-
-
-
-
-
-
+```{r echo = FALSE}
+fiber_in_cheese <- cheese %>% ggplot(aes(x = fiber, col =  type)) + geom_bar()
+ggplotly(fiber_in_cheese)
 ```
 
 ***
@@ -80,13 +69,7 @@ cheese %>% select(type, sat_fat) %>% filter(sat_fat < 1) %>% arrange(sat_fat)
 
 
 
-
-
-
 ```
-
-
-
 ***
 #How does the balance between protein, fat, and carbohydrate content differ between types of cheese? For example, are high-protein cheeses generally lower in carbs?
 
@@ -99,9 +82,6 @@ cheese %>% select(type, sat_fat) %>% filter(sat_fat < 1) %>% arrange(sat_fat)
 
 
 ```
-
-
-
 
 ***
 #Which cheeses have a profile that might be considered more "heart-healthy" (e.g., lower in saturated fat, higher in polyunsaturated fat)?
