@@ -7,17 +7,26 @@ output:
   powerpoint_presentation: default
 ---
 
-# Introduction
+# Cheese: The Good, The Bad, and The Healthy
 
-Good Afternoon, my partner and I are going to be discussing the benefits and health risks with Cheese. Some of the the key points we will be talking about how cholesterol , fat , and calories can have an impact on your health.
+<!-- Introduction -->
 
+As a couple of cheese lovers, we will try to determine which cheeses we should be eating and which we to stay away from based on their nutritional content such as...
 
-```{r echo = FALSE}
+- Saturated fat, polysaturated fat, protein, carbs, cholesterol, fiber, and calories.
+
+Our project is based on a cheese dataset, downloaded from Github.
+<!-- Diana** - I can't find the link anymore -->
+
+```{r, echo = FALSE, include=FALSE}
 library(tidyverse)
 cheese <- read_csv("cheese.csv")
 library(plotly)
 glimpse(cheese)
+
 ```
+
+
 # What is the healthiest cheese?
 
 
@@ -25,7 +34,7 @@ People may have a differnet opionion on how to determine the healthiest of the c
 This helped us determine that -------- are the best cheeses to eat if you 
 want to be more ont he healthier side of things.
 
-```{r, echo=FALSE}
+```{r echo=FALSE}
 hc <- cheese %>% ggplot(aes(x = carb, y = sat_fat, col =  type)) + geom_point()
 ggplotly(hc)
 ```
@@ -103,7 +112,7 @@ ggplotly(heart_health)
 
 ```{r}
 
-
+cheese %>% select(type, kcal, sat_fat, chol, protein) %>% filter(sat_fat < 1.5, chol < 20) %>% arrange(-protein)
 
 
 
