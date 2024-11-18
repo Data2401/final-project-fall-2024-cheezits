@@ -11,67 +11,96 @@ output:
 
 <!-- Introduction -->
 
-As a couple of cheese lovers, we will try to determine which cheeses we should be eating and which we to stay away from based on their nutritional content such as...
+As a couple of cheese lovers, we will try to determine which cheeses people should be eating and which we to stay away from based on the cheeses nutritional content and as they pertain to certain diets.
 
-- Saturated fat, polysaturated fat, protein, carbs, cholesterol, fiber, and calories.
+For example, diets such as...
 
-Our project is based on a cheese dataset, downloaded from Github.
+- Keto diet
+
+- Low calorie diet
+
+- Heart healthy diet
+
+# The Data
+
+The cheese dataset contains information of 73 different `type` of cheeses and the following 8 variables for each of them.
+
+- `sat_fat`, saturated fat
+
+- `polysat_fat`, polyunsaturated fat
+
+- `monosat_fat`, monounsaturated fat
+
+- `protein`, protein
+
+- `carb`, carbohydrates
+
+- `chol`, cholesterol
+
+- `fiber`, fiber
+
+- `kcal`, calories.
+
+All the numerical nutritional information will be based on 100g
+
+<!-- Our project is based on a cheese dataset, downloaded from Github. -->
 <!-- Diana** - I can't find the link anymore -->
 
-```{r, echo = FALSE, include=FALSE}
+```{r echo = FALSE, include=FALSE}
 library(tidyverse)
 cheese <- read_csv("cheese.csv")
 library(plotly)
 glimpse(cheese)
 
 ```
+# Are there any cheeses that align well with a ketogenic diet (high fat, low carb)?
 
+```{r echo = FALSE}
 
-# What is the healthiest cheese?
+cheese <- cheese %>% 
+  mutate(total_fat = sat_fat + polysat_fat + monosat_fat)
+  
 
+cheese %>% select(type, total_fat, carb) %>% arrange(-total_fat) %>% head(n = 5) %>% knitr::kable()
 
-People may have a differnet opionion on how to determine the healthiest of the cheeses. In addition, We put our own idea of what is the healthiest cheese by using the variables low saturated fat levels and carbohydrates.
-This helped us determine that -------- are the best cheeses to eat if you 
-want to be more ont he healthier side of things.
-
-```{r echo=FALSE}
-hc <- cheese %>% ggplot(aes(x = carb, y = sat_fat, col =  type)) + geom_point()
-ggplotly(hc)
 ```
-***
-#How does the saturated fat content compare across different cheese types? Are there cheeses with notably higher or lower saturated fat levels?
+
+# How does the saturated fat content compare across different cheese types? Are there cheeses with notably higher or lower saturated fat levels?
 
 This graph demonstrates which cheeses have low saturated fat. As we made this table, we noticed that the top 3 cheeses that have the lowest saturated fat are Moterella, Cottage, and Ricotta. This is determined due to these cheeses having less than 1 gram of saturated fat within them
 
-```{r}
+```{r, echo = FALSE}
 
-cheese %>% select(type, sat_fat) %>% filter(sat_fat < 1) %>% arrange(sat_fat)
-
-```
-***
-#How does cholesterol content vary by cheese type? Which cheeses are lower in cholesterol and might be better suited for people with specific dietary needs?
-```{r}
-
-
-
-
-
-
+cheese %>% select(type, sat_fat) %>% filter(sat_fat < 1) %>% arrange(sat_fat) %>% 
+  knitr::kable()
 
 ```
 
-***
-#Does fiber content vary significantly across cheeses, or is it generally low across all types?
+# How does cholesterol content vary by cheese type? Which cheeses are lower in cholesterol and might be better suited for people with specific dietary needs?
+```{r, echo = FALSE}
 
-If you didn't know, Fiber is the best thing to possibly do for your body when eating. It help with digestion and basically helps regulate blood sugar in your body due to you being able to feel more fuller when eating things that contain fiber. From this grapgh, we are able to determine that mozzerella is the best when it comes to fiber as well as low saturated fat. 
+
+
+
+
+
+
+```
+
+# Does fiber content vary significantly across cheeses, or is it generally low across all types?
+
+If you didn't know, fiber is the best thing to possibly do for your body when eating. It help with digestion and basically helps regulate blood sugar in your body due to you being able to feel more fuller when eating things that contain fiber. 
+
+From this graph, we are able to determine that mozzarella is the best when it comes to fiber.
 
 ```{r echo = FALSE }
-fiber_in_cheese <- cheese %>% ggplot(aes(x = fiber, col =  type)) + geom_bar()
-ggplotly(fiber_in_cheese)
+fiber_in_cheese <- cheese %>% 
+  ggplot(aes(x = fiber, fill = type)) + geom_bar()
+
+ggplotly(fiber_in_cheese) %>% layout(showlegend = FALSE)
 ```
 
-***
-#Are cheeses with higher saturated fat content also higher in total calories?
+# Are cheeses with higher saturated fat content also higher in total calories?
 
 For cheese to be a healthy consumption, the calories must be less than 100 when only eating 1 ounce. A high saturated cheese is when an ounce of chees is eater, it gives you more than 3 grams of saturated fat.
 
@@ -83,10 +112,10 @@ ggplotly(high_risk)
 
 
 ```
-***
-#How does the balance between protein, fat, and carbohydrate content differ between types of cheese? For example, are high-protein cheeses generally lower in carbs?
 
-```{r}
+# How does the balance between protein, fat, and carbohydrate content differ between types of cheese? For example, are high-protein cheeses generally lower in carbs?
+
+```{r, echo = FALSE}
 
 
 
@@ -96,8 +125,7 @@ ggplotly(high_risk)
 
 ```
 
-***
-#Which cheeses have a profile that might be considered more "heart-healthy" (e.g., lower in saturated fat, higher in polyunsaturated fat)?
+# Which cheeses have a profile that might be considered more "heart-healthy" (e.g., lower in saturated fat, higher in polyunsaturated fat)?
 
 ```{r echo = FALSE}
 
@@ -106,17 +134,32 @@ heart_health <- cheese %>% filter(sat_fat < 1 & polysat_fat <= 1.4) %>% ggplot(a
 ggplotly(heart_health)
 
 ```
-***
-#Can we identify cheese types that are lower in calories, fat, and cholesterol while still providing adequate protein?
+
+# Can we identify cheese types that are lower in calories, fat, and cholesterol while still providing adequate protein?
 
 
-```{r}
+```{r, echo = FALSE, results='asis'}
 
-cheese %>% select(type, kcal, sat_fat, chol, protein) %>% filter(sat_fat < 1.5, chol < 20) %>% arrange(-protein)
+cheese %>% 
+  select(type, kcal, sat_fat, chol, protein) %>% 
+  filter(sat_fat < 1.5, chol < 20) %>% 
+  arrange(-protein) %>% 
+  knitr::kable()
+
+```
+
+# What is the healthiest cheese?
+
+People may have a different opinion on how to determine the healthiest of the cheeses but generally cheeses with low saturated fat and high protein levels tend to be concidered the healthiest.
+
+This helped us determine that the following are the best cheeses to eat if you 
+want a healthier diet.
+
+```{r echo=FALSE}
 
 
+hc <- cheese %>% filter(sat_fat < 1) %>% ggplot(aes(x = sat_fat, y = protein, col =  type)) + geom_point()
 
-
-
+ggplotly(hc)
 
 ```
