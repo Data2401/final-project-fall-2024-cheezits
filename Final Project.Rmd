@@ -79,9 +79,9 @@ ggplotly(high_risk)
 
 ```{r}
 
+high_risk <- cheese %>% filter(sat_fat > 1 & kcal <= 100) %>% ggplot(aes(x = sat_fat, y = kcal, col =  type)) + geom_point()
 
-
-
+ggplotly(high_risk)
 
 
 
@@ -102,12 +102,6 @@ ggplotly(heart_health)
 
 
 ```{r}
-
-
-
-
-
-
 
 
 ```
