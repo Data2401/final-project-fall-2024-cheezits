@@ -87,7 +87,7 @@ This graph demonstrates which cheeses have low saturated fat. As we made this ta
 ```{r, echo = FALSE}
 
 cheese %>% select(type, sat_fat) %>% filter(sat_fat < 1) %>% arrange(sat_fat) %>% 
-  knitr::kable()
+  kbl() %>% kable_styling()
 
 
 ```
@@ -141,8 +141,7 @@ ggplotly(heart_health)
 cheese %>% 
   select(type, kcal, sat_fat, chol, protein) %>% 
   filter(sat_fat < 1.5, chol < 20) %>% 
-  arrange(-protein) %>% 
-  knitr::kable() 
+  arrange(-protein) %>% kbl() %>% kable_styling()
 
 ```
 
