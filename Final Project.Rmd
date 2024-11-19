@@ -75,7 +75,7 @@ From this graph, we are able to determine that mozzarella is the best when it co
 
 ```{r echo = FALSE }
 fiber_in_cheese <- cheese %>% 
-  ggplot(aes(x = fiber, text = type)) + geom_bar(fill = "gold1")
+  ggplot(aes(x = fiber, text = type)) + geom_bar(fill = "seagreen") + labs(title = "How Much Fiber are in Each Cheese")
 
 ggplotly(fiber_in_cheese) %>% layout(showlegend = FALSE)
 ```
@@ -123,12 +123,8 @@ ggplotly(heart_health)
 ```{r, echo = FALSE}
 
 
-
-
-
-
-
-
+cheese %>% select(type, protein, sat_fat, carb) %>% filter(protein > 1) %>% arrange(-protein) %>% 
+  kbl() %>% kable_styling()
 ```
 
 
@@ -149,8 +145,7 @@ cheese %>%
 
 People may have a different opinion on how to determine the healthiest of the cheeses but generally cheeses with low saturated fat and high protein levels tend to be considered the healthiest.
 
-This helped us determine that the following are the best cheeses to eat if you 
-want a healthier diet.
+This helped us determine that the following are the best cheeses to eat if you want a healthier diet.
 
 ```{r echo=FALSE}
 
