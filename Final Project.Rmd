@@ -58,11 +58,9 @@ library(kableExtra)
 
 
 ```{r echo = FALSE}
-
 cheese <- cheese %>% 
   mutate(total_fat = sat_fat + polysat_fat + monosat_fat)
   
-
 keto <- cheese %>% ggplot(aes(total_fat, carb, text = type)) + geom_point(color = "lightpink") + labs(title = "Best Cheeses for a Ketogenic Diet")
 ggplotly(keto)
 ```
@@ -85,11 +83,8 @@ ggplotly(fiber_in_cheese) %>% layout(showlegend = FALSE)
 This graph demonstrates which cheeses have low saturated fat. As we made this table, we noticed that the top 3 cheeses that have the lowest saturated fat are Moterella, Cottage, and Ricotta. This is determined due to these cheeses having less than 1 gram of saturated fat within them
 
 ```{r, echo = FALSE}
-
 cheese %>% select(type, sat_fat) %>% filter(sat_fat < 1) %>% arrange(sat_fat) %>% 
   kbl() %>% kable_styling()
-
-
 ```
 
 # Are cheeses with higher saturated fat content also higher in total calories?
@@ -97,12 +92,9 @@ cheese %>% select(type, sat_fat) %>% filter(sat_fat < 1) %>% arrange(sat_fat) %>
 For cheese to be a healthy consumption, the calories must be less than 100 when only eating 1 ounce. A high saturated cheese is when an ounce of chees is eater, it gives you more than 3 grams of saturated fat.
 
 ```{r echo = FALSE}
-
 high_risk <- cheese %>% ggplot(aes(x = sat_fat, y = kcal, col =  type)) + geom_point() + labs(title = "Worst Cheeses to Consume")
 
 ggplotly(high_risk) %>% layout(showlegend = FALSE)
-
-
 ```
 
 ***
@@ -111,34 +103,34 @@ ggplotly(high_risk) %>% layout(showlegend = FALSE)
 
 
 ```{r echo = FALSE}
-
 heart_health <- cheese %>% filter(sat_fat < 1 & polysat_fat <= 1.4) %>% ggplot(aes(x = sat_fat, y = polysat_fat, col =  type)) + geom_point() +labs(title = "Heart Healthy Cheeses to Consider")
 
 ggplotly(heart_health)
-
 ```
 
-# How does the balance between protein, fat, and carbohydrate content differ between types of cheese? For example, are high-protein cheeses generally lower in carbs?
+***
+#How does the balance between protein, fat, and carbohydrate content differ between types of cheese? For example, are high-protein cheeses generally lower in carbs?
 
 ```{r, echo = FALSE}
+psf <- cheese %>% ggplot(aes(x = protein, y = sat_fat, col =  type)) + geom_point() + labs(title = "Protein V Saturated Fat")
 
-
-cheese %>% select(type, protein, sat_fat, carb) %>% filter(protein > 1) %>% arrange(-protein) %>% 
-  kbl() %>% kable_styling()
+ggplotly(psf) %>% layout(showlegend = FALSE)
 ```
+***
+#How does the balance between protein, fat, and carbohydrate content differ between types of cheese? For example, are high-protein cheeses generally lower in carbs?
+```{r echo= FALSE}
+puc <- cheese %>% ggplot(aes(x = protein, y = carb, col =  type)) + geom_point() + labs(title = "Protein V Carbs")
 
-
-
+ggplotly(puc) %>% layout(showlegend = FALSE)
+```
 # Can we identify cheese types that are lower in calories, fat, and cholesterol while still providing adequate protein?
 
 
 ```{r, echo = FALSE, results='asis'}
-
 cheese %>% 
   select(type, kcal, sat_fat, chol, protein) %>% 
   filter(sat_fat < 1.5, chol < 20) %>% 
   arrange(-protein) %>% kbl() %>% kable_styling()
-
 ```
 
 # What is the healthiest cheese?
@@ -148,11 +140,7 @@ People may have a different opinion on how to determine the healthiest of the ch
 This helped us determine that the following are the best cheeses to eat if you want a healthier diet.
 
 ```{r echo=FALSE}
-
-
 hc <- cheese %>% filter(sat_fat < 1) %>% ggplot(aes(x = sat_fat, y = protein, col =  type)) + geom_point() + labs(title = "Healthiest Cheese")
 
 ggplotly(hc)
-
-
 ```
