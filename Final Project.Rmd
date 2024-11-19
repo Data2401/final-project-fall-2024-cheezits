@@ -43,14 +43,14 @@ The cheese dataset contains information of 73 different `type` of cheeses and th
 
 All the numerical nutritional information will be based on 100g
 
-<!-- Our project is based on a cheese dataset, downloaded from Github. -->
-<!-- Diana** - I can't find the link anymore -->
+<!-- https://gist.github.com/jalapic/95a72f2c2f5ccfb43e0e0ab35891d745 -->
 
 ```{r echo = FALSE, include=FALSE}
 library(tidyverse)
 cheese <- read_csv("cheese.csv")
 library(plotly)
 glimpse(cheese)
+library(kableExtra)
 
 ```
 # Are there any cheeses that align well with a ketogenic diet (high fat, low carb)?
@@ -63,10 +63,8 @@ cheese <- cheese %>%
   mutate(total_fat = sat_fat + polysat_fat + monosat_fat)
   
 
-cheese %>% select(type, total_fat, carb) %>% arrange(-total_fat) %>% head(n = 5) %>% knitr::kable()
-
-q <- cheese %>% ggplot(aes(total_fat, carb)) + geom_point()
-
+keto <- cheese %>% ggplot(aes(total_fat, carb, text = type)) + geom_point(color = "lightpink") + labs(title = "Best Cheeses for a Ketogenic Diet")
+ggplotly(keto)
 ```
 
 # Does fiber content vary significantly across cheeses, or is it generally low across all types?
@@ -77,7 +75,7 @@ From this graph, we are able to determine that mozzarella is the best when it co
 
 ```{r echo = FALSE }
 fiber_in_cheese <- cheese %>% 
-  ggplot(aes(x = fiber, fill = type)) + geom_bar()
+  ggplot(aes(x = fiber, text = type)) + geom_bar(fill = "gold1")
 
 ggplotly(fiber_in_cheese) %>% layout(showlegend = FALSE)
 ```
@@ -91,6 +89,7 @@ This graph demonstrates which cheeses have low saturated fat. As we made this ta
 cheese %>% select(type, sat_fat) %>% filter(sat_fat < 1) %>% arrange(sat_fat) %>% 
   knitr::kable()
 
+
 ```
 
 # Are cheeses with higher saturated fat content also higher in total calories?
@@ -99,33 +98,21 @@ For cheese to be a healthy consumption, the calories must be less than 100 when 
 
 ```{r echo = FALSE}
 
-high_risk <- cheese %>% ggplot(aes(x = sat_fat, y = kcal, col =  type)) + geom_point()
+high_risk <- cheese %>% ggplot(aes(x = sat_fat, y = kcal, col =  type)) + geom_point() + labs(title = "Worst Cheeses to Consume")
 
 ggplotly(high_risk) %>% layout(showlegend = FALSE)
 
 
 ```
 
-<<<<<<< HEAD
-```{r}
-
-high_risk <- cheese %>% filter(sat_fat > 1 & kcal <= 100) %>% ggplot(aes(x = sat_fat, y = kcal, col =  type)) + geom_point()
-
-ggplotly(high_risk)
-
-
-
-```
-
 ***
-#Which cheeses have a profile that might be considered more "heart-healthy" (e.g., lower in saturated fat, higher in polyunsaturated fat)?
-=======
+
 # Which cheeses have a profile that might be considered more "heart-healthy" (e.g., lower in saturated fat, higher in polyunsaturated fat)?
->>>>>>> 27a6668a25cd11201b606b7bf261481ecd99433d
+
 
 ```{r echo = FALSE}
 
-heart_health <- cheese %>% filter(sat_fat < 1 & polysat_fat <= 1.4) %>% ggplot(aes(x = sat_fat, y = polysat_fat, col =  type)) + geom_point()
+heart_health <- cheese %>% filter(sat_fat < 1 & polysat_fat <= 1.4) %>% ggplot(aes(x = sat_fat, y = polysat_fat, col =  type)) + geom_point() +labs(title = "Heart Healthy Cheeses to Consider")
 
 ggplotly(heart_health)
 
@@ -155,13 +142,13 @@ cheese %>%
   select(type, kcal, sat_fat, chol, protein) %>% 
   filter(sat_fat < 1.5, chol < 20) %>% 
   arrange(-protein) %>% 
-  knitr::kable()
+  knitr::kable() 
 
 ```
 
 # What is the healthiest cheese?
 
-People may have a different opinion on how to determine the healthiest of the cheeses but generally cheeses with low saturated fat and high protein levels tend to be concidered the healthiest.
+People may have a different opinion on how to determine the healthiest of the cheeses but generally cheeses with low saturated fat and high protein levels tend to be considered the healthiest.
 
 This helped us determine that the following are the best cheeses to eat if you 
 want a healthier diet.
@@ -169,7 +156,7 @@ want a healthier diet.
 ```{r echo=FALSE}
 
 
-hc <- cheese %>% filter(sat_fat < 1) %>% ggplot(aes(x = sat_fat, y = protein, col =  type)) + geom_point()
+hc <- cheese %>% filter(sat_fat < 1) %>% ggplot(aes(x = sat_fat, y = protein, col =  type)) + geom_point() + labs(title = "Healthiest Cheese")
 
 ggplotly(hc)
 
