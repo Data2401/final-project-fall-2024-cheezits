@@ -97,8 +97,6 @@ high_risk <- cheese %>% ggplot(aes(x = sat_fat, y = kcal, col =  type)) + geom_p
 ggplotly(high_risk) %>% layout(showlegend = FALSE)
 ```
 
-***
-
 # Which cheeses have a profile that might be considered more "heart-healthy" (e.g., lower in saturated fat, higher in polyunsaturated fat)?
 
 
@@ -108,16 +106,16 @@ heart_health <- cheese %>% filter(sat_fat < 1 & polysat_fat <= 1.4) %>% ggplot(a
 ggplotly(heart_health)
 ```
 
-***
-#How does the balance between protein, fat, and carbohydrate content differ between types of cheese? For example, are high-protein cheeses generally lower in carbs?
+
+# How does the balance between protein, fat, and carbohydrate content differ between types of cheese? For example, are high-protein cheeses generally lower in carbs?
 
 ```{r, echo = FALSE}
 psf <- cheese %>% ggplot(aes(x = protein, y = sat_fat, col =  type)) + geom_point() + labs(title = "Protein V Saturated Fat")
 
 ggplotly(psf) %>% layout(showlegend = FALSE)
 ```
-***
-#How does the balance between protein, fat, and carbohydrate content differ between types of cheese? For example, are high-protein cheeses generally lower in carbs?
+
+# How does the balance between protein, fat, and carbohydrate content differ between types of cheese? For example, are high-protein cheeses generally lower in carbs?
 ```{r echo= FALSE}
 puc <- cheese %>% ggplot(aes(x = protein, y = carb, col =  type)) + geom_point() + labs(title = "Protein V Carbs")
 
