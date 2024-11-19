@@ -65,28 +65,6 @@ cheese %>% select(type, total_fat, carb) %>% arrange(-total_fat) %>% head(n = 5)
 
 ```
 
-# How does the saturated fat content compare across different cheese types? Are there cheeses with notably higher or lower saturated fat levels?
-
-This graph demonstrates which cheeses have low saturated fat. As we made this table, we noticed that the top 3 cheeses that have the lowest saturated fat are Moterella, Cottage, and Ricotta. This is determined due to these cheeses having less than 1 gram of saturated fat within them
-
-```{r, echo = FALSE}
-
-cheese %>% select(type, sat_fat) %>% filter(sat_fat < 1) %>% arrange(sat_fat) %>% 
-  knitr::kable()
-
-```
-
-# How does cholesterol content vary by cheese type? Which cheeses are lower in cholesterol and might be better suited for people with specific dietary needs?
-```{r, echo = FALSE}
-
-
-
-
-
-
-
-```
-
 # Does fiber content vary significantly across cheeses, or is it generally low across all types?
 
 If you didn't know, fiber is the best thing to possibly do for your body when eating. It help with digestion and basically helps regulate blood sugar in your body due to you being able to feel more fuller when eating things that contain fiber. 
@@ -100,16 +78,37 @@ fiber_in_cheese <- cheese %>%
 ggplotly(fiber_in_cheese) %>% layout(showlegend = FALSE)
 ```
 
+# How does the saturated fat content compare across different cheese types? Are there cheeses with notably higher or lower saturated fat levels?
+
+This graph demonstrates which cheeses have low saturated fat. As we made this table, we noticed that the top 3 cheeses that have the lowest saturated fat are Moterella, Cottage, and Ricotta. This is determined due to these cheeses having less than 1 gram of saturated fat within them
+
+```{r, echo = FALSE}
+
+cheese %>% select(type, sat_fat) %>% filter(sat_fat < 1) %>% arrange(sat_fat) %>% 
+  knitr::kable()
+
+```
+
 # Are cheeses with higher saturated fat content also higher in total calories?
 
 For cheese to be a healthy consumption, the calories must be less than 100 when only eating 1 ounce. A high saturated cheese is when an ounce of chees is eater, it gives you more than 3 grams of saturated fat.
 
 ```{r echo = FALSE}
 
-high_risk <- cheese %>% filter(sat_fat > 1 & kcal <= 100) %>% ggplot(aes(x = sat_fat, y = kcal, col =  type)) + geom_point()
+high_risk <- cheese %>% ggplot(aes(x = sat_fat, y = kcal, col =  type)) + geom_point()
 
-ggplotly(high_risk)
+ggplotly(high_risk) %>% layout(showlegend = FALSE)
 
+
+```
+
+# Which cheeses have a profile that might be considered more "heart-healthy" (e.g., lower in saturated fat, higher in polyunsaturated fat)?
+
+```{r echo = FALSE}
+
+heart_health <- cheese %>% filter(sat_fat < 1 & polysat_fat <= 1.4) %>% ggplot(aes(x = sat_fat, y = polysat_fat, col =  type)) + geom_point()
+
+ggplotly(heart_health)
 
 ```
 
@@ -125,15 +124,7 @@ ggplotly(high_risk)
 
 ```
 
-# Which cheeses have a profile that might be considered more "heart-healthy" (e.g., lower in saturated fat, higher in polyunsaturated fat)?
 
-```{r echo = FALSE}
-
-heart_health <- cheese %>% filter(sat_fat < 1 & polysat_fat <= 1.4) %>% ggplot(aes(x = sat_fat, y = polysat_fat, col =  type)) + geom_point()
-
-ggplotly(heart_health)
-
-```
 
 # Can we identify cheese types that are lower in calories, fat, and cholesterol while still providing adequate protein?
 
