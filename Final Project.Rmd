@@ -21,6 +21,9 @@ For example, diets such as...
 
 - Heart healthy diet
 
+We downloaded our dataset from github.
+https://gist.github.com/jalapic/95a72f2c2f5ccfb43e0e0ab35891d745
+
 # The Data
 
 The cheese dataset contains information of 73 different `type` of cheeses and the following 8 variables for each of them.
@@ -43,8 +46,6 @@ The cheese dataset contains information of 73 different `type` of cheeses and th
 
 All the numerical nutritional information will be based on 100g
 
-<!-- https://gist.github.com/jalapic/95a72f2c2f5ccfb43e0e0ab35891d745 -->
-
 ```{r echo = FALSE, include=FALSE}
 library(tidyverse)
 cheese <- read_csv("cheese.csv")
@@ -55,7 +56,9 @@ library(kableExtra)
 ```
 # Are there any cheeses that align well with a ketogenic diet (high fat, low carb)?
 
+This graph shows that most cheeses can be suitable for a keto diet since they are all below 13.40g.
 
+Except for one, gjetost. 
 
 ```{r echo = FALSE}
 cheese <- cheese %>% 
@@ -69,7 +72,9 @@ ggplotly(keto)
 
 If you didn't know, fiber is the best thing to possibly do for your body when eating. It help with digestion and basically helps regulate blood sugar in your body due to you being able to feel more fuller when eating things that contain fiber. 
 
-From this graph, we are able to determine that mozzarella is the best when it comes to fiber.
+From this graph, we are able to determine that mozzarella is the best when it comes to fiber. But why? 
+
+When most cheeses have 0 fiber. The few with low fiber are cheeses with some fruit or vegetable in them.
 
 ```{r echo = FALSE }
 fiber_in_cheese <- cheese %>% 
