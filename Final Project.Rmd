@@ -21,12 +21,13 @@ For example, diets such as...
 
 - Heart healthy diet
 
-We downloaded our dataset from github.
-https://gist.github.com/jalapic/95a72f2c2f5ccfb43e0e0ab35891d745
-
 # The Data
 
-The cheese dataset contains information of 73 different `type` of cheeses and the following 8 variables for each of them.
+We downloaded our dataset from github.
+
+> https://gist.github.com/jalapic/95a72f2c2f5ccfb43e0e0ab35891d745
+
+The cheese dataset contains information for 73 different `type` of cheeses and the following 8 variables for each of them.
 
 - `sat_fat`, saturated fat
 
@@ -46,6 +47,26 @@ The cheese dataset contains information of 73 different `type` of cheeses and th
 
 All the numerical nutritional information will be based on 100g
 
+# Saturated vs. Unsaturated Fats
+  
+- Saturated Fats
+
+  - They are the unhealthy fats.
+  
+  - They are usually solid at room temperature and can cause fatty deposits in blood vessels leading to heart disease.
+  
+  - Mostly found in animal products like meat and dairy  
+
+- Unsaturated Fats
+
+  - They are the healthy fats.
+  
+  - They are usually liquid at room temperature. And help reduce blood pressure and increase good cholesterol.
+  
+  - Usually found in plant products, oils, nuts, and fish.
+  
+
+
 ```{r echo = FALSE, include=FALSE}
 library(tidyverse)
 cheese <- read_csv("cheese.csv")
@@ -56,15 +77,18 @@ library(kableExtra)
 ```
 # Are there any cheeses that align well with a ketogenic diet (high fat, low carb)?
 
-This graph shows that most cheeses can be suitable for a keto diet since they are all below 13.40g.
+To make this graph, we added a mutated variable `total_fat`, by adding all three fats (`sat_fat, polysat_fat, monosat_fat`) together.
 
-Except for one, gjetost. 
+This graph shows that most cheeses can be suitable for a keto diet since carbs are below 13.4g for all...
+
+Except one, gjetost which is at 42.65g.
 
 ```{r echo = FALSE}
 cheese <- cheese %>% 
   mutate(total_fat = sat_fat + polysat_fat + monosat_fat)
   
-keto <- cheese %>% ggplot(aes(total_fat, carb, text = type)) + geom_point(color = "lightpink") + labs(title = "Best Cheeses for a Ketogenic Diet")
+keto <- cheese %>% ggplot(aes(total_fat, carb, text = type)) + geom_point(color = "maroon") + labs(title = "Best Cheeses for a Ketogenic Diet")
+
 ggplotly(keto)
 ```
 
@@ -72,9 +96,9 @@ ggplotly(keto)
 
 If you didn't know, fiber is the best thing to possibly do for your body when eating. It help with digestion and basically helps regulate blood sugar in your body due to you being able to feel more fuller when eating things that contain fiber. 
 
-From this graph, we are able to determine that mozzarella is the best when it comes to fiber. But why? 
+From this graph, we are able to determine that mozzarella is the best when it comes to fiber, which fiber at 1.8g. But why? 
 
-When most cheeses have 0 fiber. The few with low fiber are cheeses with some fruit or vegetable in them.
+When most cheeses have 0 fiber and the few with low fiber are cheeses with some fruit or vegetable in them.
 
 ```{r echo = FALSE }
 fiber_in_cheese <- cheese %>% 
@@ -85,54 +109,97 @@ ggplotly(fiber_in_cheese) %>% layout(showlegend = FALSE)
 
 # How does the saturated fat content compare across different cheese types? Are there cheeses with notably higher or lower saturated fat levels?
 
-This graph demonstrates which cheeses have low saturated fat. As we made this table, we noticed that the top 3 cheeses that have the lowest saturated fat are Moterella, Cottage, and Ricotta. This is determined due to these cheeses having less than 1 gram of saturated fat within them
+This table demonstrates which cheeses have low saturated fat which was determined by filtering cheeses that have less than 1 gram of saturated fat in them.
+
+With this table we can see that out of the 73 cheeses, 9 are low saturated fat. So, 88% of cheeses have high saturated fat levels.
+
+As we made this table, we noticed that the top 3 cheeses that have the lowest saturated fat are Mozzarella, Cottage, and Ricotta. 
 
 ```{r, echo = FALSE}
 cheese %>% select(type, sat_fat) %>% filter(sat_fat < 1) %>% arrange(sat_fat) %>% 
   kbl() %>% kable_styling()
 ```
 
-# Are cheeses with higher saturated fat content also higher in total calories?
+# Which cheeses have a profile that might be considered more "heart-healthy" (e.g., lower in saturated fat, higher in unsaturated fat)?
 
-For cheese to be a healthy consumption, the calories must be less than 100 when only eating 1 ounce. A high saturated cheese is when an ounce of chees is eater, it gives you more than 3 grams of saturated fat.
+This table is comparing the saturated fat to the total unsaturated fat with a mutated variable `unsat_fat` which is `polysat_fat` and `monosat_fat` added together.
+
+This table also filtered `sat_fat` to be less than 1g because we want cheeses with low saturated fat levels.
+
+We can see that even with low saturated fat levels, the unsaturated fat levels are even lower. So even though these cheeses are not as unhealthy, they are not necessarily more "heart-healthy"
+
+
+```{r}
+cheese <- cheese %>% 
+  mutate(unsat_fat = polysat_fat + monosat_fat)
+
+cheese %>% select(type, sat_fat, unsat_fat) %>% filter(sat_fat < 1) %>% arrange(sat_fat) %>% 
+  kbl() %>% kable_styling()
+
+```
 
 ```{r echo = FALSE}
-high_risk <- cheese %>% ggplot(aes(x = sat_fat, y = kcal, col =  type)) + geom_point() + labs(title = "Worst Cheeses to Consume")
+
+# This is easier to see on table
+
+# heart_health <- cheese %>% filter(sat_fat < 1) %>% ggplot(aes(x = sat_fat, y = total_unsat_fat, col =  type)) + geom_point() +labs(title = "Heart Healthy Cheeses to Consider")
+
+# ggplotly(heart_health)
+```
+
+# Unsaturated vs Saturated Fat Levels
+
+It can be seen here that as unsaturated fat levels go up so do saturated fat levels.
+
+```{r, echo = FALSE}
+fat_levels <- cheese %>% ggplot(aes(x = unsat_fat, y = sat_fat, text = type)) + geom_point(color = "royalblue") + labs(title = "Unsaturated vs Saturated Fat Levels")
+
+ggplotly(fat_levels) %>% layout(showlegend = FALSE)
+
+```
+
+
+# Are cheeses with higher saturated fat content also higher in total calories?
+
+This graph shows the relationship between sat_fat and calories, as saturated fat increases so does the calories.
+
+For cheese to be a healthy consumption, the calories must be less than 100 per service size, which is about 28g. 
+
+```{r echo = FALSE}
+high_risk <- cheese %>% ggplot(aes(x = sat_fat, y = kcal, text = type)) + geom_point(color = "goldenrod") + labs(title = "Worst Cheeses to Consume")
 
 ggplotly(high_risk) %>% layout(showlegend = FALSE)
 ```
 
-# Which cheeses have a profile that might be considered more "heart-healthy" (e.g., lower in saturated fat, higher in polyunsaturated fat)?
-
-
-```{r echo = FALSE}
-heart_health <- cheese %>% filter(sat_fat < 1 & polysat_fat <= 1.4) %>% ggplot(aes(x = sat_fat, y = polysat_fat, col =  type)) + geom_point() +labs(title = "Heart Healthy Cheeses to Consider")
-
-ggplotly(heart_health)
-```
-
-
 # How does the balance between protein, fat, and carbohydrate content differ between types of cheese? For example, are high-protein cheeses generally lower in carbs?
 
+Here we found that there is no relationship between protein and fat in a cheese.
+
 ```{r, echo = FALSE}
-psf <- cheese %>% ggplot(aes(x = protein, y = sat_fat, col =  type)) + geom_point() + labs(title = "Protein V Saturated Fat")
+psf <- cheese %>% ggplot(aes(x = protein, y = total_fat, text = type)) + geom_point(color = "darkolivegreen4") + labs(title = "Protein V Fat")
 
 ggplotly(psf) %>% layout(showlegend = FALSE)
 ```
 
 # How does the balance between protein, fat, and carbohydrate content differ between types of cheese? For example, are high-protein cheeses generally lower in carbs?
+
+But for protein and carbs, we found that cheese is generally low in carbs and has no relation to the amount of protein in a cheese.
+
 ```{r echo= FALSE}
-puc <- cheese %>% ggplot(aes(x = protein, y = carb, col =  type)) + geom_point() + labs(title = "Protein V Carbs")
+puc <- cheese %>% ggplot(aes(x = protein, y = carb, text = type)) + geom_point(color = "tomato3") + labs(title = "Protein V Carbs")
 
 ggplotly(puc) %>% layout(showlegend = FALSE)
+
 ```
 # Can we identify cheese types that are lower in calories, fat, and cholesterol while still providing adequate protein?
 
+In this table, we filtered the cheeses to sat_fat to be less than 1 gram and cholesterol to be less than 20 g and we have seen that low sat_fat also gives us low calories. We decided to arrange by protein to see which cheese will give us the highest protein levels.
 
-```{r, echo = FALSE, results='asis'}
+
+```{r, echo = T}
 cheese %>% 
   select(type, kcal, sat_fat, chol, protein) %>% 
-  filter(sat_fat < 1.5, chol < 20) %>% 
+  filter(sat_fat < 1, chol < 20) %>% 
   arrange(-protein) %>% kbl() %>% kable_styling()
 ```
 
