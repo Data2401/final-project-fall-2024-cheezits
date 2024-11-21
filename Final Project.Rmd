@@ -214,3 +214,7 @@ hc <- cheese %>% filter(sat_fat < 1) %>% ggplot(aes(x = sat_fat, y = protein, co
 
 ggplotly(hc)
 ```
+
+
+# Thank You for Listening!
+Please feel free to ask questions
