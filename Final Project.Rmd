@@ -1,10 +1,7 @@
 ---
 title: "Cheese Slides!"
 author: "Diana & Leslie"
-output:
-  slidy_presentation: 
-    highlight: kate
-  powerpoint_presentation: default
+output: html_document
 ---
 
 # Cheese: The Good, The Bad, and The Healthy
@@ -215,6 +212,3 @@ hc <- cheese %>% filter(sat_fat < 1) %>% ggplot(aes(x = sat_fat, y = protein, co
 ggplotly(hc)
 ```
 
-
-# Thank You for Listening!
-Please feel free to ask questions
