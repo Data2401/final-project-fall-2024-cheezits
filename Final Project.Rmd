@@ -1,5 +1,5 @@
 ---
-title: "Cheese Slides!"
+title: "Cheese"
 author: "Diana & Leslie"
 output: html_document
 ---
@@ -65,11 +65,12 @@ All the numerical nutritional information will be based on 100g
 
 
 ```{r echo = FALSE, include=FALSE}
-library(tidyverse)
+library(tidyverse) # We loaded this to be able to manipulate the data.
 cheese <- read_csv("cheese.csv")
-library(plotly)
+library(plotly) # We added this to be able to make interactive plots.
 glimpse(cheese)
-library(kableExtra)
+library(kableExtra) # We loaded this to make pretty tables.
+
 
 ```
 # Are there any cheeses that align well with a ketogenic diet (high fat, low carb)?
@@ -178,8 +179,6 @@ psf <- cheese %>% ggplot(aes(x = protein, y = total_fat, text = type)) + geom_po
 ggplotly(psf) %>% layout(showlegend = FALSE)
 ```
 
-# How does the balance between protein, fat, and carbohydrate content differ between types of cheese? For example, are high-protein cheeses generally lower in carbs?
-
 But for protein and carbs, we found that cheese is generally low in carbs and has no relation to the amount of protein in a cheese.
 
 ```{r echo= FALSE}
@@ -200,11 +199,11 @@ cheese %>%
   arrange(-protein) %>% kbl() %>% kable_styling()
 ```
 
-# What is the healthiest cheese?
+# Summary, What is the healthiest cheese?
 
 People may have a different opinion on how to determine the healthiest of the cheeses but generally cheeses with low saturated fat and high protein levels tend to be considered the healthiest.
 
-This helped us determine that the following are the best cheeses to eat if you want a healthier diet.
+This plot helped us determine that the following are the best cheeses to eat if you want a healthier diet and as can be seen that Mozzarella, non-fat is the best cheese with the highest protein levels and the lowest saturated fat levels.
 
 ```{r echo=FALSE}
 hc <- cheese %>% filter(sat_fat < 1) %>% ggplot(aes(x = sat_fat, y = protein, col =  type)) + geom_point() + labs(title = "Healthiest Cheese")
